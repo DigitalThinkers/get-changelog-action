@@ -1,0 +1,51 @@
+name: "Get Changelog from GitHub release"
+author: "Robert Szalai"
+description: "GitHub action to get Changelog from a GitHub release and optionally convert to Slack mrkdwn and/or replace ClickUp task IDs to links"
+inputs:
+  clickUpTeamId:
+    description: "Team ID in ClickUp to use in link replacements"
+    required: false
+    default: ""
+  clickUpCustomPrefix:
+    description: "When set, it is used to find ClickUp task IDs in the changelog"
+    required: false
+    default: ""
+  convertToMrkdwn:
+    description: "When convertToMrkdwn is enabled the body will be converted to Slack mrkdwn changelog"
+    required: false
+    default: "false"
+  owner:
+    description: "The owner of the repo from which we get the release"
+    required: true
+    default: ""
+  replaceClickUpLinks:
+    description: "When replaceClickUpLinks is enabled the ClickUp ids will be replaced with links to the task"
+    required: false
+    default: "false"
+  repo:
+    description: "The repo from which we get the release"
+    required: true
+    default: ""
+  tag:
+    description: "The tag of the release"
+    required: true
+    default: "latest"
+  token:
+    description: "The Github token."
+    required: true
+    default: ${{ github.token }}
+outputs:
+  id:
+    description: "The identifier of the release."
+  html_url:
+    description: "The HTML URL of the release."
+  body:
+    description: "The original body of the release."
+  changelog:
+    description: "The modified changelog of the release"
+runs:
+  using: "node20"
+  main: "dist/index.js"
+branding:
+  icon: "tag"
+  color: "gray-dark"
